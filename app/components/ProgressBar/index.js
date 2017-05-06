@@ -2,7 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import ProgressBar from './ProgressBar';
 
-function withProgressBar(WrappedComponent) {
+// For testing with custom router.
+export function withProgressBar(WrappedComponent) {
   class AppWithProgressBar extends React.Component {
     constructor(props) {
       super(props);
@@ -67,7 +68,9 @@ function withProgressBar(WrappedComponent) {
     router: React.PropTypes.object,
   };
 
-  return withRouter(AppWithProgressBar);
+  return AppWithProgressBar;
 }
 
-export default withProgressBar;
+export default function (wrappedComponent) {
+  return withRouter(withProgressBar(wrappedComponent));
+}
