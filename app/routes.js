@@ -11,19 +11,21 @@ import createHomePageLoader from 'containers/HomePage/loader';
 import createFeaturePageLoader from 'containers/FeaturePage/loader';
 import createNotFoundPageLoader from 'containers/NotFoundPage/loader';
 
-const Routes = ({ store }) => (
-  <Switch>
-    <AsyncRoute
-      exact path="/" load={createHomePageLoader(store)}
-    />
-    <AsyncRoute
-      exact path="/features" load={createFeaturePageLoader(store)}
-    />
-    <AsyncRoute
-      exact path="" load={createNotFoundPageLoader(store)}
-    />
-  </Switch>
-);
+function Routes({ store }) {
+  return (
+    <Switch>
+      <AsyncRoute
+        exact path="/" load={createHomePageLoader(store)}
+      />
+      <AsyncRoute
+        exact path="/features" load={createFeaturePageLoader(store)}
+      />
+      <AsyncRoute
+        exact path="" load={createNotFoundPageLoader(store)}
+      />
+    </Switch>
+  );
+}
 
 Routes.propTypes = {
   store: React.PropTypes.object,
