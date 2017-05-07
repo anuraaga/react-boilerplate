@@ -1,5 +1,5 @@
 /**
- * A helper component that renders a Route that will load a component when the Route is
+ * A helper comonent that renders a Route that will load a component when the Route is
  * rendered. This allows for asynchronous loading of routes, enabling code-splitting.
  *
  * Inspired by https://reacttraining.com/react-router/web/guides/code-splitting
@@ -21,6 +21,7 @@ class Bundle extends Component {
     this.load(this.props);
   }
 
+  /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
     if (nextProps.load !== this.props.load) {
       this.load(nextProps);

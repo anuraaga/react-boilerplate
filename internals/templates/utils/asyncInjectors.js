@@ -81,5 +81,6 @@ export function getAsyncInjectors(store) {
  * Helper to log an error when asynchronous loading fails.
  */
 export function errorLoading(err) {
+  /* istanbul ignore next */
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
 }
