@@ -74,6 +74,11 @@ module.exports = {
       path: '../../app/containers/{{properCase name}}/loader.js',
       templateFile: './container/loader.js.hbs',
       abortOnFail: true,
+    }, {
+      type: 'add',
+      path: '../../app/containers/{{properCase name}}/tests/loader.test.js',
+      templateFile: './container/loader.test.js.hbs',
+      abortOnFail: true,
     }];
 
     // If component wants messages
