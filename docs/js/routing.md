@@ -15,23 +15,9 @@ To add a new route, use the generator with `npm run generate route`.
 This is what a standard (generated) route looks like for a container:
 
 ```JS
-{
-  path: '/',
-  name: 'home',
-  getComponent(nextState, cb) {
-    const importModules = Promise.all([
-      import('containers/HomePage')
-    ]);
-
-    const renderRoute = loadModule(cb);
-
-    importModules.then(([component]) => {
-      renderRoute(component);
-    });
-
-    importModules.catch(errorLoading);
-  },
-}
+<AsyncRoute
+  exact path="/" load={createHomePageLoader(store)}
+/>
 ```
 
 To go to a new page use the `push` function by `react-router-redux`:
@@ -87,69 +73,14 @@ For example, if you have a route called `about` at `/about` and want to make a c
 }
 ```
 
-## Index routes
-
-To add an index route, use the following pattern:
-
-```JS
-{
-  path: '/',
-  name: 'home',
-  getComponent(nextState, cb) {
-    const importModules = Promise.all([
-      import('containers/HomePage')
-    ]);
-
-    const renderRoute = loadModule(cb);
-
-    importModules.then(([component]) => {
-      renderRoute(component);
-    });
-
-    importModules.catch(errorLoading);
-  },
-  indexRoute: {
-    getComponent(partialNextState, cb) {
-      const importModules = Promise.all([
-        import('containers/HomeView')
-      ]);
-
-      const renderRoute = loadModule(cb);
-
-      importModules.then(([component]) => {
-        renderRoute(component);
-      });
-
-      importModules.catch(errorLoading);
-    },
-  },
-}
-```
-
 ## Dynamic routes
 
 To go to a dynamic route such as 'post/:slug' eg 'post/cool-new-post', firstly add the route to your `routes.js`, as per documentation:
 
 ```JS
-path: '/posts/:slug',
-name: 'post',
-getComponent(nextState, cb) {
- const importModules = Promise.all([
-   import('containers/Post/reducer'),
-   import('containers/Post/sagas'),
-   import('containers/Post'),
- ]);
-
- const renderRoute = loadModule(cb);
-
- importModules.then(([reducer, sagas, component]) => {
-   injectReducer('post', reducer.default);
-   injectSagas(sagas.default);
-   renderRoute(component);
- });
-
- importModules.catch(errorLoading);
-},
+<AsyncRoute
+  exact path="/posts/:slug" load={createPostLoader(store)}
+/>
 ```
 
 ###Container:
