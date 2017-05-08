@@ -29,49 +29,54 @@ dispatch(push('/some/page'));
 ```
 
 ## Child Routes
-`npm run generate route` does not currently support automatically generating child routes if you need them, but they can be easily created manually.
+`npm run generate route` does not currently support automatically generating child routes if you need them, but they can be created manually.
+With React Router v4, it is the job of a parent component to render child routes.
 
-For example, if you have a route called `about` at `/about` and want to make a child route called `team` at `/about/our-team` you can just add that child page to the parent page's `childRoutes` array like so:
+For example, if you have a route called `about` at `/about` and want to make a child route called `team` at `/about/our-team`, first use
+the standard usage to generate a route to the parent page at `/about` and edit routes.js to remove the term exact. Then, follow the example
+in routes.js to create a `Switch` within the parent component.
 
+routes.js
 ```JS
-/* your app's other routes would already be in this array */
-{
-  path: '/about',
-  name: 'about',
-  getComponent(nextState, cb) {
-    const importModules = Promise.all([
-      import('containers/AboutPage'),
-    ]);
+/* your app's other routes would already be in this component */
+<AsyncRoute
+  path="/about" load={createAboutPageLoader(store)}
+/>
+```
 
-    const renderRoute = loadModule(cb);
+AboutPage/index.js
+```JS
+import { Switch } from 'react-router';
 
-    importModules.then(([component]) => {
-      renderRoute(component);
-    });
+import AsyncRoute from 'routing/AsyncRoute';
 
-    importModules.catch(errorLoading);
-  },
-  childRoutes: [
-    {
-      path: '/about/our-team',
-      name: 'team',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          import('containers/TeamPage'),
-        ]);
+import createTeamPageLoader from 'containers/TeamPage/loader';
 
-        const renderRoute = loadModule(cb);
+class AboutPage extends React.PureComponent {
 
-        importModules.then(([component]) => {
-          renderRoute(component);
-        });
+  static contextTypes = {
+    store: React.PropTypes.object,
+  };
 
-        importModules.catch(errorLoading);
-      },
-    },
-  ]
+
+  render() {
+    const store = this.context.store;
+    return (
+      <Switch>
+        <AsyncRoute
+          exact path="/about/our-team" load={createTeamPageLoader(store)}
+        />
+      </Switch>
+    );
+  }
 }
 ```
+
+Note that with React Router v4, route re-rendering is handled by React's standard shouldComponentUpdate check. This
+means that when using a redux connected component or `PureComponent`, it is necessary for the component to have the
+location in its props to be able to re-render on location change. Any component directly rendered by `AsyncRoute` or
+`Route` will have a location prop, but for other cases, use `makeSelectLocation` in `containers/App/selectors` to select
+the location from the redux store in the parent page to ensure child routes re-render correctly.
 
 ## Dynamic routes
 
