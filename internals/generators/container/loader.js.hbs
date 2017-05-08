@@ -11,11 +11,11 @@ export default (store) => {
   const { injectReducer{{#if wantSagas}}, injectSagas{{/if}} } = getAsyncInjectors(store);
   return (cb) => {
     const importModules = Promise.all([
-      import('containers/{{ properCase name }}/reducer'),
+      import('./reducer'),
       {{#if wantSagas}}
-      import('containers/{{ properCase name }}/sagas'),
+      import('./sagas'),
       {{/if}}
-      import('containers/{{ properCase name }}'),
+      import('./index'),
     ]);
 
     importModules.then(([reducer,{{#if wantSagas}} sagas,{{/if}} component]) => {
@@ -33,7 +33,7 @@ export default (store) => {
 import { errorLoading } from 'utils/asyncInjectors';
 
 export default () => (cb) => {
-  import('containers/{{ properCase name }}')
+  import('./index')
     .then(cb)
     .catch(errorLoading);
 };

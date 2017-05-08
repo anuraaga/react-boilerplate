@@ -5,7 +5,7 @@
 import { errorLoading } from 'utils/asyncInjectors';
 
 export default () => (cb) => {
-  import('containers/HomePage')
+  import('./index')
     .then(cb)
     .catch(errorLoading);
 };

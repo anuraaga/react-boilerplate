@@ -8,9 +8,9 @@ export default (store) => {
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
   return (cb) => {
     const importModules = Promise.all([
-      import('containers/HomePage/reducer'),
-      import('containers/HomePage/sagas'),
-      import('containers/HomePage'),
+      import('./reducer'),
+      import('./sagas'),
+      import('./index'),
     ]);
 
     importModules.then(([reducer, sagas, component]) => {
