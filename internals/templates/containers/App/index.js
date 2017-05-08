@@ -19,7 +19,7 @@ import Routes from 'routes';
 
 import { makeSelectLocation } from './selectors';
 
-class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
   render() {
     return (
