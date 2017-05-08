@@ -17,12 +17,10 @@ describe('<App />', () => {
   });
 
   it('should render routes', () => {
-    const store = {};
-    const routes = (<Routes store={store} />);
     const renderedComponent = shallow(
-      <App store={store} />
+      <App />
     );
-    expect(renderedComponent.contains(routes)).toBe(true);
+    expect(renderedComponent.find(Routes).length).toBe(1);
   });
 
   it('should render the footer', () => {

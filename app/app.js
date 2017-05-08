@@ -70,7 +70,7 @@ const render = (messages) => {
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App store={store} />
+          <App />
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

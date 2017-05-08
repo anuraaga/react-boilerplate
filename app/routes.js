@@ -11,24 +11,28 @@ import createHomePageLoader from 'containers/HomePage/loader';
 import createFeaturePageLoader from 'containers/FeaturePage/loader';
 import createNotFoundPageLoader from 'containers/NotFoundPage/loader';
 
-function Routes({ store }) {
-  return (
-    <Switch>
-      <AsyncRoute
-        exact path="/" load={createHomePageLoader(store)}
-      />
-      <AsyncRoute
-        exact path="/features" load={createFeaturePageLoader(store)}
-      />
-      <AsyncRoute
-        exact path="" load={createNotFoundPageLoader(store)}
-      />
-    </Switch>
-  );
-}
+class Routes extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
-Routes.propTypes = {
-  store: React.PropTypes.object,
-};
+  static contextTypes = {
+    store: React.PropTypes.object,
+  };
+
+  render() {
+    const store = this.context.store;
+    return (
+      <Switch>
+        <AsyncRoute
+          exact path="/" load={createHomePageLoader(store)}
+        />
+        <AsyncRoute
+          exact path="/features" load={createFeaturePageLoader(store)}
+        />
+        <AsyncRoute
+          exact path="" load={createNotFoundPageLoader(store)}
+        />
+      </Switch>
+    );
+  }
+}
 
 export default Routes;

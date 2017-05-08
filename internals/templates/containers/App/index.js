@@ -24,7 +24,7 @@ export default class App extends React.PureComponent { // eslint-disable-line re
   render() {
     return (
       <div>
-        <Routes store={this.props.store} />
+        <Routes />
       </div>
     );
   }

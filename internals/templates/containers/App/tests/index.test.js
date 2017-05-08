@@ -1,17 +1,19 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import createMemoryHistory from 'history/createMemoryHistory';
 
 import Routes from 'routes';
+import configureStore from 'store';
 
 import App from '../index';
 
 describe('<App />', () => {
   it('should render routes', () => {
-    const store = {};
-    const routes = (<Routes store={store} />);
+    const store = configureStore({}, createMemoryHistory());
     const renderedComponent = shallow(
-      <App store={store} />
+      <App />,
+      { context: { store } },
     );
-    expect(renderedComponent.contains(routes)).toBe(true);
+    expect(renderedComponent.find(Routes).length).toBe(1);
   });
 });

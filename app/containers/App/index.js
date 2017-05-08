@@ -25,7 +25,7 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App(props) {
+export function App() {
   return (
     <AppWrapper>
       <Helmet
@@ -36,7 +36,7 @@ export function App(props) {
         ]}
       />
       <Header />
-      <Routes store={props.store} />
+      <Routes />
       <Footer />
     </AppWrapper>
   );
