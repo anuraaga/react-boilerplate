@@ -5,27 +5,33 @@
 
 import React from 'react';
 import { Switch } from 'react-router';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import AsyncRoute from 'routing/AsyncRoute';
+import { makeSelectLocation } from 'containers/App/selectors';
 
 import createHomePageLoader from 'containers/HomePage/loader';
 import createNotFoundPageLoader from 'containers/NotFoundPage/loader';
 
-function Routes({ store }) {
-  return (
-    <Switch>
-      <AsyncRoute
-        exact path="/" load={createHomePageLoader(store)}
-      />
-      <AsyncRoute
-        exact path="" load={createNotFoundPageLoader(store)}
-      />
-    </Switch>
-  );
+class Routes extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  render() {
+    const store = this.context.store;
+    return (
+      <Switch>
+        <AsyncRoute
+          exact path="/" load={createHomePageLoader(store)}
+        />
+        <AsyncRoute
+          exact path="" load={createNotFoundPageLoader(store)}
+        />
+      </Switch>
+    );
+  }
 }
 
-Routes.propTypes = {
-  store: React.PropTypes.object,
-};
+const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
+});
 
-export default Routes;
+export default connect(mapStateToProps)(Routes);

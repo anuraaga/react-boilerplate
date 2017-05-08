@@ -8,6 +8,8 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 
 import Header from 'components/Header';
@@ -15,6 +17,8 @@ import Footer from 'components/Footer';
 import withProgressBar from 'components/ProgressBar';
 
 import Routes from 'routes';
+
+import { makeSelectLocation } from './selectors';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -42,8 +46,8 @@ export function App() {
   );
 }
 
-App.propTypes = {
-  store: React.PropTypes.object,
-};
+const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
+});
 
-export default withProgressBar(App);
+export default withProgressBar(connect(mapStateToProps)(App));

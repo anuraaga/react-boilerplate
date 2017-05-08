@@ -5,8 +5,12 @@
 
 import React from 'react';
 import { Switch } from 'react-router';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import AsyncRoute from 'routing/AsyncRoute';
+import { makeSelectLocation } from 'containers/App/selectors';
+
 import createHomePageLoader from 'containers/HomePage/loader';
 import createFeaturePageLoader from 'containers/FeaturePage/loader';
 import createNotFoundPageLoader from 'containers/NotFoundPage/loader';
@@ -35,4 +39,8 @@ class Routes extends React.PureComponent { // eslint-disable-line react/prefer-s
   }
 }
 
-export default Routes;
+const mapStateToProps = createStructuredSelector({
+  location: makeSelectLocation(),
+});
+
+export default connect(mapStateToProps)(Routes);
