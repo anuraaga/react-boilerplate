@@ -13,6 +13,7 @@ import { makeSelectLocation } from 'containers/App/selectors';
 
 import createHomePageLoader from 'containers/HomePage/loader';
 import createFeaturePageLoader from 'containers/FeaturePage/loader';
+import createParentPageLoader from 'containers/ParentPage/loader';
 import createNotFoundPageLoader from 'containers/NotFoundPage/loader';
 
 class Routes extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -30,6 +31,9 @@ class Routes extends React.PureComponent { // eslint-disable-line react/prefer-s
         />
         <AsyncRoute
           exact path="/features" load={createFeaturePageLoader(store)}
+        />
+        <AsyncRoute
+          path="/parent" load={createParentPageLoader(store)}
         />
         <AsyncRoute
           exact path="" load={createNotFoundPageLoader(store)}
